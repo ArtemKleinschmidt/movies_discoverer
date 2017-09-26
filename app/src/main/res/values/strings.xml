@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MoviesDiscoverer</string>
+    <string name="activity_movies_title">Movies Discoverer</string>
+</resources>
