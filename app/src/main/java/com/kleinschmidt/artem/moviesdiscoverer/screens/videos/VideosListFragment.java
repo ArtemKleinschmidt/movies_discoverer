@@ -1,4 +1,4 @@
-package com.kleinschmidt.artem.moviesdiscoverer.screens.movies;
+package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -66,7 +66,7 @@ public class VideosListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MoviesListViewModel model = ViewModelProviders.of(this).get(MoviesListViewModel.class);
+        VideosListViewModel model = ViewModelProviders.of(this).get(VideosListViewModel.class);
         model.loadData();
         model.getResultsContainerLiveData().observe(this, resultsContainer -> {
             Log.d(TAG, "results are reseived: resultsContainer " + resultsContainer);

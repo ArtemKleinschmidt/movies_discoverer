@@ -1,16 +1,16 @@
-package com.kleinschmidt.artem.moviesdiscoverer.screens.movies;
+package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.kleinschmidt.artem.moviesdiscoverer.R;
 
-public class MoviesActivity extends AppCompatActivity {
+public class VideosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_videos);
     }
 
 }

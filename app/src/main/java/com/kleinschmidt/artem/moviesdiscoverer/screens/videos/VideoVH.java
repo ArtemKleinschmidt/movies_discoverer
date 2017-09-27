@@ -1,4 +1,4 @@
-package com.kleinschmidt.artem.moviesdiscoverer.screens.movies;
+package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
 
 import android.databinding.ViewDataBinding;
 

@@ -8,7 +8,7 @@ import io.reactivex.Single;
  * Created by Artem Kleinschmidt on 26.09.2017.
  */
 
-public interface MoviesRepository {
+public interface VideosRepository {
 
     Single<ResultsContainer> getPopularMovies();
 
