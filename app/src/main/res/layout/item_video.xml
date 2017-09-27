@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="video"
+            type="com.kleinschmidt.artem.moviesdiscoverer.pojo.Video" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{video.posterPath}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/poster"
+            app:layout_constraintTop_toTopOf="@id/poster"
+            android:text="@{video.title}"
+            tools:text="Test video title"/>
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.format(@string/release_date, video.releaseDate)}"
+            tools:text="@string/release_date"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintLeft_toRightOf="@id/poster"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.format(@string/rating, video.voteAverage.toString())}"
+            tools:text="@string/rating"
+            app:layout_constraintTop_toBottomOf="@id/release_date"
+            app:layout_constraintLeft_toRightOf="@id/poster"
+            android:layout_marginLeft="16dp"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
