@@ -1,6 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.api;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -30,6 +31,7 @@ public class ServiceGenerator {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         addApiKeyInterceptor(httpClient);
         addLoggingInterceptor(httpClient);
+        configureTimeout(httpClient);
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()
@@ -38,6 +40,12 @@ public class ServiceGenerator {
                         .client(httpClient.build())
                         .addConverterFactory(GsonConverterFactory.create());
         retrofit = builder.build();
+    }
+
+    private void configureTimeout(OkHttpClient.Builder httpClient) {
+        httpClient.connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
     }
 
     private void addApiKeyInterceptor(OkHttpClient.Builder httpClient) {

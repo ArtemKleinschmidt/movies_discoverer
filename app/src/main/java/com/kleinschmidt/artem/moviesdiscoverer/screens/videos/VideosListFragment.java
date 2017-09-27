@@ -67,8 +67,7 @@ public class VideosListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         VideosListViewModel model = ViewModelProviders.of(this).get(VideosListViewModel.class);
-        model.loadData();
-        model.getResultsContainerLiveData().observe(this, resultsContainer -> {
+        model.getPopularVideos().observe(this, resultsContainer -> {
             Log.d(TAG, "results are reseived: resultsContainer " + resultsContainer);
             binding.progressBar.setVisibility(View.GONE);
             videoList.addAll(resultsContainer.getVideos());

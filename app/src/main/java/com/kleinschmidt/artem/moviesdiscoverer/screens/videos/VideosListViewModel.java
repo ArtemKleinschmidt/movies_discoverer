@@ -18,27 +18,27 @@ import io.reactivex.disposables.Disposable;
 public class VideosListViewModel extends ViewModel {
 
     private static final String TAG = "VideosListViewModel";
-    private final MutableLiveData<ResultsContainer> resultsContainerLiveData;
+    private MutableLiveData<ResultsContainer> resultsContainerLiveData;
     private VideosRepository videosRepository;
     private CompositeDisposable compositeDisposable;
 
-    public VideosListViewModel() {
-        resultsContainerLiveData = new MutableLiveData<>();
-        compositeDisposable = new CompositeDisposable();
-    }
-
-    MutableLiveData<ResultsContainer> getResultsContainerLiveData() {
+    MutableLiveData<ResultsContainer> getPopularVideos() {
+        Log.d(TAG, "getPopularVideos() called");
+        if (resultsContainerLiveData == null) {
+            resultsContainerLiveData = new MutableLiveData<>();
+            loadPopularVideos();
+        }
         return resultsContainerLiveData;
     }
 
-    void loadData() {
+    private void loadPopularVideos() {
         Disposable disposable = getOrCreateMoviesRepository().getPopularMovies().subscribe(resultsContainer -> {
             resultsContainerLiveData.setValue(resultsContainer);
             Log.d(TAG, "onSuccess: " + resultsContainer);
         }, throwable -> {
             Log.e(TAG, "onError: ", throwable);
         });
-        compositeDisposable.add(disposable);
+        getOrCreateCompositeDisposable().add(disposable);
     }
 
     private VideosRepository getOrCreateMoviesRepository() {
@@ -48,9 +48,18 @@ public class VideosListViewModel extends ViewModel {
         return videosRepository;
     }
 
+    private CompositeDisposable getOrCreateCompositeDisposable() {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        return compositeDisposable;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.clear();
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 }
