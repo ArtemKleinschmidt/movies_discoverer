@@ -69,7 +69,7 @@ public class VideosListFragment extends Fragment {
         MoviesListViewModel model = ViewModelProviders.of(this).get(MoviesListViewModel.class);
         model.loadData();
         model.getResultsContainerLiveData().observe(this, resultsContainer -> {
-            Log.d(TAG, "onCreate: resultsContainer " + resultsContainer);
+            Log.d(TAG, "results are reseived: resultsContainer " + resultsContainer);
             binding.progressBar.setVisibility(View.GONE);
             videoList.addAll(resultsContainer.getVideos());
             adapter.notifyDataSetChanged();
