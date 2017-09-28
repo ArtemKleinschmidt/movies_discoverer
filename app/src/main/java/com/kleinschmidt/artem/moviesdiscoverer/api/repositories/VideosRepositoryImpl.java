@@ -3,6 +3,7 @@ package com.kleinschmidt.artem.moviesdiscoverer.api.repositories;
 import com.kleinschmidt.artem.moviesdiscoverer.api.ServiceGenerator;
 import com.kleinschmidt.artem.moviesdiscoverer.api.services.VideosService;
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.ResultsContainer;
+import com.kleinschmidt.artem.moviesdiscoverer.pojo.detailed_video.DetailedVideo;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,6 +21,14 @@ public class VideosRepositoryImpl implements VideosRepository {
     public Single<ResultsContainer> getPopularMovies() {
         return getOrCreateMoviesService()
                 .getPopularMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Single<DetailedVideo> getDetailedVideo(int id) {
+        return getOrCreateMoviesService()
+                .getDetailedMovie(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

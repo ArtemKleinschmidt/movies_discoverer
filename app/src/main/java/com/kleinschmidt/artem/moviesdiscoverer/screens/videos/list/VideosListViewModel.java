@@ -1,4 +1,4 @@
-package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
+package com.kleinschmidt.artem.moviesdiscoverer.screens.videos.list;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -19,8 +19,13 @@ public class VideosListViewModel extends ViewModel {
 
     private static final String TAG = "VideosListViewModel";
     private MutableLiveData<ResultsContainer> resultsContainerLiveData;
-    private VideosRepository videosRepository;
-    private CompositeDisposable compositeDisposable;
+    private final VideosRepository videosRepository;
+    private final CompositeDisposable compositeDisposable;
+
+    public VideosListViewModel() {
+        videosRepository = new VideosRepositoryImpl();
+        compositeDisposable =  new CompositeDisposable();
+    }
 
     MutableLiveData<ResultsContainer> getPopularVideos() {
         Log.d(TAG, "getPopularVideos() called");
@@ -32,34 +37,18 @@ public class VideosListViewModel extends ViewModel {
     }
 
     private void loadPopularVideos() {
-        Disposable disposable = getOrCreateMoviesRepository().getPopularMovies().subscribe(resultsContainer -> {
+        Disposable disposable = videosRepository.getPopularMovies().subscribe(resultsContainer -> {
             resultsContainerLiveData.setValue(resultsContainer);
             Log.d(TAG, "onSuccess: " + resultsContainer);
         }, throwable -> {
             Log.e(TAG, "onError: ", throwable);
         });
-        getOrCreateCompositeDisposable().add(disposable);
-    }
-
-    private VideosRepository getOrCreateMoviesRepository() {
-        if (videosRepository == null) {
-            videosRepository = new VideosRepositoryImpl();
-        }
-        return videosRepository;
-    }
-
-    private CompositeDisposable getOrCreateCompositeDisposable() {
-        if (compositeDisposable == null) {
-            compositeDisposable = new CompositeDisposable();
-        }
-        return compositeDisposable;
+        compositeDisposable.add(disposable);
     }
 
     @Override
     protected void onCleared() {
+        compositeDisposable.dispose();
         super.onCleared();
-        if (compositeDisposable != null) {
-            compositeDisposable.clear();
-        }
     }
 }

@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
  * Created by Artem Kleinschmidt on 27.09.2017.
  */
 
-public abstract class BindingVH <E> extends RecyclerView.ViewHolder{
+public abstract class BindingVH <E, T extends ViewDataBinding> extends RecyclerView.ViewHolder{
     private final ViewDataBinding binding;
 
-    public BindingVH(ViewDataBinding binding) {
+    public BindingVH(T binding) {
         super(binding.getRoot());
         this.binding = binding;
     }

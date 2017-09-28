@@ -1,6 +1,7 @@
-package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
+package com.kleinschmidt.artem.moviesdiscoverer.screens.videos.list;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,16 +31,37 @@ public class VideosListFragment extends Fragment {
     private FragmentVideosListBinding binding;
     private List<Video> videoList;
     private VideosAdapter adapter;
+    private VideosListViewModel viewModel;
+    private DetailedVideoScreenLauncher detailedVideoScreenLauncher;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_videos_list, container, false);
-        View view = binding.getRoot();
         setTitle();
         configureRecycler();
-        return view;
+        showProgressBar();
+        connectToViewModel();
+        return binding.getRoot();
+    }
+
+    private void showProgressBar() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DetailedVideoScreenLauncher) {
+            detailedVideoScreenLauncher = (DetailedVideoScreenLauncher) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        detailedVideoScreenLauncher = null;
     }
 
     private void setTitle() {
@@ -49,7 +71,11 @@ public class VideosListFragment extends Fragment {
 
     private void configureRecycler() {
         if (adapter == null) {
-            adapter = new VideosAdapter(getOrCreateVideoList());
+            adapter = new VideosAdapter(getOrCreateVideoList(), (id, title) -> {
+                if (detailedVideoScreenLauncher != null) {
+                    detailedVideoScreenLauncher.launchDetailedVideoScreen(id, title);
+                }
+            });
         }
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.moviesRecycler.setAdapter(adapter);
@@ -63,16 +89,18 @@ public class VideosListFragment extends Fragment {
         return videoList;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        VideosListViewModel model = ViewModelProviders.of(this).get(VideosListViewModel.class);
-        model.getPopularVideos().observe(this, resultsContainer -> {
-            Log.d(TAG, "results are reseived: resultsContainer " + resultsContainer);
+    private void connectToViewModel() {
+        viewModel = ViewModelProviders.of(this).get(VideosListViewModel.class);
+        viewModel.getPopularVideos().observe(this, resultsContainer -> {
+            Log.d(TAG, "results are received: resultsContainer " + resultsContainer);
             binding.progressBar.setVisibility(View.GONE);
             videoList.addAll(resultsContainer.getVideos());
             adapter.notifyDataSetChanged();
         });
+    }
+
+    public interface DetailedVideoScreenLauncher {
+        void launchDetailedVideoScreen(int id, String title);
     }
 
 }

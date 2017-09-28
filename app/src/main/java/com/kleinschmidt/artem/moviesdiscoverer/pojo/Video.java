@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import static com.kleinschmidt.artem.moviesdiscoverer.api.ServiceGenerator.IMAGE_POSTER_PATH_ROOT_URL;
+
 /**
  * Created by Artem Kleinschmidt on 26.09.2017.
  */
@@ -103,7 +105,7 @@ public class Video {
     }
 
     public String getPosterPath() {
-        return "http://image.tmdb.org/t/p/w300" + posterPath;
+        return IMAGE_POSTER_PATH_ROOT_URL + posterPath;
     }
 
     public void setPosterPath(String posterPath) {

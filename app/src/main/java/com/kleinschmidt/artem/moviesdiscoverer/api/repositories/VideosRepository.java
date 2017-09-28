@@ -1,6 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.api.repositories;
 
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.ResultsContainer;
+import com.kleinschmidt.artem.moviesdiscoverer.pojo.detailed_video.DetailedVideo;
 
 import io.reactivex.Single;
 
@@ -11,5 +12,7 @@ import io.reactivex.Single;
 public interface VideosRepository {
 
     Single<ResultsContainer> getPopularMovies();
+
+    Single<DetailedVideo> getDetailedVideo(int id);
 
 }
