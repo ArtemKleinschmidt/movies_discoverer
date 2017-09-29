@@ -5,8 +5,9 @@ import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.kleinschmidt.artem.moviesdiscoverer.api.repositories.VideosRepository;
-import com.kleinschmidt.artem.moviesdiscoverer.api.repositories.VideosRepositoryImpl;
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.ResultsContainer;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -19,12 +20,15 @@ public class VideosListViewModel extends ViewModel {
 
     private static final String TAG = "VideosListViewModel";
     private MutableLiveData<ResultsContainer> resultsContainerLiveData;
-    private final VideosRepository videosRepository;
-    private final CompositeDisposable compositeDisposable;
+    @Inject CompositeDisposable compositeDisposable;
+    @Inject VideosRepository videosRepository;
 
     public VideosListViewModel() {
-        videosRepository = new VideosRepositoryImpl();
         compositeDisposable =  new CompositeDisposable();
+    }
+
+    public void setVideosRepository(VideosRepository videosRepository) {
+        this.videosRepository = videosRepository;
     }
 
     MutableLiveData<ResultsContainer> getPopularVideos() {

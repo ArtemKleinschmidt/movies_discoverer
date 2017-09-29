@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".app.MoviesDiscovererApp">
         <activity android:name=".screens.videos.VideosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

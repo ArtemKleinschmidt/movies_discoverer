@@ -3,6 +3,9 @@ package com.kleinschmidt.artem.moviesdiscoverer.api;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -16,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Artem Kleinschmidt on 26.09.2017.
  */
-
+@Singleton
 public class ServiceGenerator {
 
     public static final String IMAGE_POSTER_PATH_ROOT_URL = "http://image.tmdb.org/t/p/w300";
@@ -29,7 +32,8 @@ public class ServiceGenerator {
 
     private Retrofit retrofit;
 
-    ServiceGenerator() {
+    @Inject
+    public ServiceGenerator() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         addApiKeyInterceptor(httpClient);
         addLoggingInterceptor(httpClient);
@@ -75,13 +79,6 @@ public class ServiceGenerator {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(interceptor);
-    }
-
-    public static ServiceGenerator getServiceGenerator() {
-        if (serviceGenerator == null) {
-            serviceGenerator = new ServiceGenerator();
-        }
-        return serviceGenerator;
     }
 
     public <S> S createService(
