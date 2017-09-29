@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 @Module
 @PerScreenScope
-public class RxJavaModule {
+public class CompositeDisposableModule {
 
     @Provides
     CompositeDisposable provideCompositeDisposable() {

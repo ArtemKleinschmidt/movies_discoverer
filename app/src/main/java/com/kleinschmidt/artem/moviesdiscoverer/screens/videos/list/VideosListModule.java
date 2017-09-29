@@ -11,6 +11,7 @@ import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Artem Kleinschmidt on 29.09.2017.
@@ -19,9 +20,10 @@ import dagger.Provides;
 public class VideosListModule {
 
     @Provides
-    VideosListViewModel provideVideosListViewModelModule(VideosListFragment fragment, VideosRepository videosRepository) {
+    VideosListViewModel provideVideosListViewModelModule(VideosListFragment fragment, VideosRepository videosRepository, CompositeDisposable compositeDisposable) {
         VideosListViewModel viewModel = ViewModelProviders.of(fragment).get(VideosListViewModel.class);
         viewModel.setVideosRepository(videosRepository);
+        viewModel.setCompositeDisposable(compositeDisposable);
         return viewModel;
     }
 

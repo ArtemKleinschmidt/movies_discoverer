@@ -1,7 +1,5 @@
 package com.kleinschmidt.artem.moviesdiscoverer.screens.videos.detailed;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kleinschmidt.artem.moviesdiscoverer.R;
+import com.kleinschmidt.artem.moviesdiscoverer.app.MoviesDiscovererApp;
 import com.kleinschmidt.artem.moviesdiscoverer.databinding.FragmentDetailedVideoBinding;
-import com.kleinschmidt.artem.moviesdiscoverer.screens.videos.list.VideosListFragment;
+
+import javax.inject.Inject;
 
 /**
  * Created by Artem Kleinschmidt on 27.09.2017.
@@ -24,9 +24,8 @@ public class DetailedVideoFragment extends Fragment {
     public static final String TITLE = "TITLE";
     private int videoId;
     private String title;
-    private DetailedVideoViewModel viewModel;
     private FragmentDetailedVideoBinding binding;
-    private VideosListFragment.DetailedVideoScreenLauncher detailedVideoScreenLauncher;
+    @Inject DetailedVideoViewModel viewModel;
 
     @Nullable
     @Override
@@ -48,7 +47,6 @@ public class DetailedVideoFragment extends Fragment {
     }
 
     private void connectToViewModel() {
-        viewModel = ViewModelProviders.of(this).get(DetailedVideoViewModel.class);
         viewModel.getDetailedVideo(videoId).observe(this,
                 detailedVideo -> {
                     binding.setDetailedVideo(detailedVideo);
@@ -57,23 +55,20 @@ public class DetailedVideoFragment extends Fragment {
                 });
     }
 
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof VideosListFragment.DetailedVideoScreenLauncher) {
-            detailedVideoScreenLauncher = (VideosListFragment.DetailedVideoScreenLauncher) context;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        detailedVideoScreenLauncher = null;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectDependencies();
         readArguments();
+    }
+
+    private void injectDependencies() {
+        DaggerDetailedVideoComponent
+                .builder()
+                .appComponent(MoviesDiscovererApp.appComponent())
+                .fragment(this)
+                .build()
+                .inject(this);
     }
 
     /**

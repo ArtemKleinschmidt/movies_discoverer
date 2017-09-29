@@ -7,8 +7,6 @@ import android.util.Log;
 import com.kleinschmidt.artem.moviesdiscoverer.api.repositories.VideosRepository;
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.ResultsContainer;
 
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -20,16 +18,8 @@ public class VideosListViewModel extends ViewModel {
 
     private static final String TAG = "VideosListViewModel";
     private MutableLiveData<ResultsContainer> resultsContainerLiveData;
-    @Inject CompositeDisposable compositeDisposable;
-    @Inject VideosRepository videosRepository;
-
-    public VideosListViewModel() {
-        compositeDisposable =  new CompositeDisposable();
-    }
-
-    public void setVideosRepository(VideosRepository videosRepository) {
-        this.videosRepository = videosRepository;
-    }
+    private CompositeDisposable compositeDisposable;
+    private VideosRepository videosRepository;
 
     MutableLiveData<ResultsContainer> getPopularVideos() {
         Log.d(TAG, "getPopularVideos() called");
@@ -55,4 +45,13 @@ public class VideosListViewModel extends ViewModel {
         compositeDisposable.dispose();
         super.onCleared();
     }
+
+    public void setVideosRepository(VideosRepository videosRepository) {
+        this.videosRepository = videosRepository;
+    }
+
+    public void setCompositeDisposable(CompositeDisposable compositeDisposable) {
+        this.compositeDisposable = compositeDisposable;
+    }
+
 }

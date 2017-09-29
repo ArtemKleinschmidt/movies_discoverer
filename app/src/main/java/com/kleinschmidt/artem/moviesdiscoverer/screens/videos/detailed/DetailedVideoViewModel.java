@@ -8,8 +8,6 @@ import android.util.Log;
 import com.kleinschmidt.artem.moviesdiscoverer.api.repositories.VideosRepository;
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.detailed_video.DetailedVideo;
 
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -20,14 +18,8 @@ import io.reactivex.disposables.Disposable;
 public final class DetailedVideoViewModel extends ViewModel {
     private static final String TAG = "DetailedVideoViewModel";
     private MutableLiveData<DetailedVideo> detailedVideoLiveData;
-    private  VideosRepository videosRepository;
-    private final CompositeDisposable compositeDisposable;
-
-    @Inject
-    public DetailedVideoViewModel() {
-        //videosRepository = new VideosRepositoryImpl();
-        compositeDisposable =  new CompositeDisposable();
-    }
+    private VideosRepository videosRepository;
+    private CompositeDisposable compositeDisposable;
 
     LiveData<DetailedVideo> getDetailedVideo(int id) {
         if (detailedVideoLiveData == null) {
@@ -47,6 +39,14 @@ public final class DetailedVideoViewModel extends ViewModel {
                     Log.e(TAG, "getDetailedVideo: ", throwable);
                 });
         compositeDisposable.add(disposable);
+    }
+
+    public void setVideosRepository(VideosRepository videosRepository) {
+        this.videosRepository = videosRepository;
+    }
+
+    public void setCompositeDisposable(CompositeDisposable compositeDisposable) {
+        this.compositeDisposable = compositeDisposable;
     }
 
 }
