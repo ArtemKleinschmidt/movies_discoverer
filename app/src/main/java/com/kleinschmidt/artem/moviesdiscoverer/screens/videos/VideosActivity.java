@@ -1,8 +1,8 @@
 package com.kleinschmidt.artem.moviesdiscoverer.screens.videos;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kleinschmidt.artem.moviesdiscoverer.R;
 import com.kleinschmidt.artem.moviesdiscoverer.screens.videos.detailed.DetailedVideoFragment;

@@ -1,7 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.dagger_common;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.kleinschmidt.artem.moviesdiscoverer.screens.videos.detailed.DetailedVideoViewModel;
 import com.kleinschmidt.artem.moviesdiscoverer.screens.videos.list.VideosListViewModel;

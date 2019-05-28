@@ -28,8 +28,6 @@ public class ServiceGenerator {
     private static final String API_KEY = "api_key";
     private static final String API_KEY_VALUE = "17d6fa4d3f865c897fc92f7ebfc88ead";
 
-    private static ServiceGenerator serviceGenerator;
-
     private Retrofit retrofit;
 
     @Inject

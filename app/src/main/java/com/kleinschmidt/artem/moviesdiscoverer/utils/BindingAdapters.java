@@ -1,7 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.utils;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
