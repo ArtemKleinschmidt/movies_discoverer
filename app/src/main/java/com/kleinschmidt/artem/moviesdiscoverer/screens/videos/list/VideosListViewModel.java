@@ -42,8 +42,8 @@ public class VideosListViewModel extends ViewModel {
 
     @Override
     protected void onCleared() {
-        compositeDisposable.dispose();
         super.onCleared();
+        compositeDisposable.dispose();
     }
 
     public void setVideosRepository(VideosRepository videosRepository) {

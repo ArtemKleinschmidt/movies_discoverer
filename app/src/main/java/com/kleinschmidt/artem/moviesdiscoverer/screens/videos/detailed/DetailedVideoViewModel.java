@@ -49,4 +49,10 @@ public final class DetailedVideoViewModel extends ViewModel {
         this.compositeDisposable = compositeDisposable;
     }
 
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.dispose();
+    }
 }
