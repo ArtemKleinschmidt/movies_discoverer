@@ -1,5 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.screens.videos.detailed;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,13 +21,13 @@ import javax.inject.Inject;
  */
 
 public class DetailedVideoFragment extends Fragment {
-    private static final String TAG = "DetailedVideoFragment";
     public static final String VIDEO_ID = "VIDEO_ID";
     public static final String TITLE = "TITLE";
     private int videoId;
     private String title;
     private FragmentDetailedVideoBinding binding;
-    @Inject DetailedVideoViewModel viewModel;
+    @Inject ViewModelProvider.Factory viewModelFactory;
+    private DetailedVideoViewModel viewModel;
 
     @Nullable
     @Override
@@ -59,6 +61,7 @@ public class DetailedVideoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
+        createViewModel();
         readArguments();
     }
 
@@ -66,9 +69,14 @@ public class DetailedVideoFragment extends Fragment {
         DaggerDetailedVideoComponent
                 .builder()
                 .appComponent(MoviesDiscovererApp.appComponent())
-                .fragment(this)
                 .build()
                 .inject(this);
+    }
+
+    private void createViewModel() {
+        viewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(DetailedVideoViewModel.class);
     }
 
     /**

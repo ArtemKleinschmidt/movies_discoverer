@@ -6,7 +6,10 @@ import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.kleinschmidt.artem.moviesdiscoverer.api.repositories.VideosRepository;
+import com.kleinschmidt.artem.moviesdiscoverer.dagger_common.PerScreenScope;
 import com.kleinschmidt.artem.moviesdiscoverer.pojo.detailed_video.DetailedVideo;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -14,12 +17,18 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by Artem Kleinschmidt on 28.09.2017.
  */
-
+@PerScreenScope
 public final class DetailedVideoViewModel extends ViewModel {
     private static final String TAG = "DetailedVideoViewModel";
     private MutableLiveData<DetailedVideo> detailedVideoLiveData;
-    private VideosRepository videosRepository;
-    private CompositeDisposable compositeDisposable;
+    private final VideosRepository videosRepository;
+    private final CompositeDisposable compositeDisposable;
+
+    @Inject
+    DetailedVideoViewModel(VideosRepository videosRepository, CompositeDisposable compositeDisposable) {
+        this.videosRepository = videosRepository;
+        this.compositeDisposable = compositeDisposable;
+    }
 
     LiveData<DetailedVideo> getDetailedVideo(int id) {
         if (detailedVideoLiveData == null) {
@@ -40,15 +49,6 @@ public final class DetailedVideoViewModel extends ViewModel {
                 });
         compositeDisposable.add(disposable);
     }
-
-    public void setVideosRepository(VideosRepository videosRepository) {
-        this.videosRepository = videosRepository;
-    }
-
-    public void setCompositeDisposable(CompositeDisposable compositeDisposable) {
-        this.compositeDisposable = compositeDisposable;
-    }
-
 
     @Override
     protected void onCleared() {

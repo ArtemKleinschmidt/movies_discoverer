@@ -1,5 +1,7 @@
 package com.kleinschmidt.artem.moviesdiscoverer.screens.videos.list;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -34,22 +36,29 @@ public class VideosListFragment extends Fragment {
     private DetailedVideoScreenLauncher detailedVideoScreenLauncher;
     @Inject VideosAdapter adapter;
     @Inject List<Video> videoList;
-    @Inject VideosListViewModel viewModel;
+    @Inject ViewModelProvider.Factory viewModelFactory;
+    VideosListViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
+        createViewModel();
     }
 
     private void injectDependencies() {
         DaggerVideoListComponent
                 .builder()
                 .appComponent(MoviesDiscovererApp.appComponent())
-                .fragment(this)
                 .onVideoItemClickLister(getOnVideoItemClickListener())
                 .build()
                 .inject(this);
+    }
+
+    private void createViewModel() {
+        viewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(VideosListViewModel.class);
     }
 
     @NonNull
