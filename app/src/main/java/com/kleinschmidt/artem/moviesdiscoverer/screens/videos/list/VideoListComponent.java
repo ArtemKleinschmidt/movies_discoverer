@@ -18,11 +18,10 @@ public interface VideoListComponent {
 
     void inject(VideosListFragment videosListFragment);
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance Builder onVideoItemClickLister(VideosAdapter.OnVideoItemClickLister onVideoItemClickLister);
-        Builder appComponent(AppComponent appComponent);
-        VideoListComponent build();
+    @Component.Factory
+    interface Factory {
+        VideoListComponent create(AppComponent appComponent,
+                                         @BindsInstance VideosAdapter.OnVideoItemClickLister onVideoItemClickLister);
     }
 
 }

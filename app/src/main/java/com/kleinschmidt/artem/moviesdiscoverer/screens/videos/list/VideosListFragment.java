@@ -48,10 +48,8 @@ public class VideosListFragment extends Fragment {
 
     private void injectDependencies() {
         DaggerVideoListComponent
-                .builder()
-                .appComponent(MoviesDiscovererApp.appComponent())
-                .onVideoItemClickLister(getOnVideoItemClickListener())
-                .build()
+                .factory()
+                .create(MoviesDiscovererApp.appComponent(), getOnVideoItemClickListener())
                 .inject(this);
     }
 
