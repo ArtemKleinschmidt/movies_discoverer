@@ -22,8 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Singleton
 public class ServiceGenerator {
 
-    public static final String IMAGE_POSTER_PATH_ROOT_URL = "http://image.tmdb.org/t/p/w300";
-    public static final String IMAGE_BACKDROP_PATH_ROOT_URL = "http://image.tmdb.org/t/p/w500";
+    public static final String IMAGE_POSTER_PATH_ROOT_URL = "https://image.tmdb.org/t/p/w300";
+    public static final String IMAGE_BACKDROP_PATH_ROOT_URL = "https://image.tmdb.org/t/p/w500";
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
     private static final String API_KEY = "api_key";
     private static final String API_KEY_VALUE = "17d6fa4d3f865c897fc92f7ebfc88ead";
